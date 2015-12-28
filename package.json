@@ -9,6 +9,6 @@
     "url": "https://github.com/machinemetrics/q-repeat"
   },
   "dependencies": {
-
+    "q": "^1.4.1"
   }
 }
