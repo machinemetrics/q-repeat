@@ -1,0 +1,14 @@
+{
+  "name": "q-repeat",
+  "description": "A couple of heap-safe looping constructs for Q.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "lib",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/machinemetrics/q-repeat"
+  },
+  "dependencies": {
+
+  }
+}
