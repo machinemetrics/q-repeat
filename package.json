@@ -5,8 +5,9 @@
   "license": "MIT",
   "main": "lib",
   "scripts": {
-    "pretest": "(yarn install)",
-    "test": "(mocha test && eslint .)"
+    "test": "yarn run lint && yarn run test-only",
+    "test-only": "istanbul cover --dir $CIRCLE_ARTIFACTS/coverage/ _mocha test",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
