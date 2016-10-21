@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "lib",
   "scripts": {
-    "test": "yarn run lint && yarn run test-only",
+    "test": "npm run lint && npm run test-only",
     "test-only": "istanbul cover --dir $CIRCLE_ARTIFACTS/coverage/ _mocha test",
     "lint": "eslint ."
   },
