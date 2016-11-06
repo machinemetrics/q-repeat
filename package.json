@@ -6,7 +6,7 @@
   "main": "lib",
   "scripts": {
     "test": "npm run lint && npm run test-only",
-    "test-only": "istanbul cover --dir $CIRCLE_ARTIFACTS/coverage/ _mocha test",
+    "test-only": "istanbul cover _mocha test",
     "lint": "eslint ."
   },
   "repository": {
