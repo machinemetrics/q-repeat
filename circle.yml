@@ -3,3 +3,8 @@ dependencies:
     - npm install -g eslint@3.7.1
     - npm install -g mocha@3.1.0
     - npm install -g istanbul@0.4.5
+    - yarn install
+
+test:
+  post:
+    - mv coverage $CIRCLE_ARTIFACTS
