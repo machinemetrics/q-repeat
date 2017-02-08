@@ -39,4 +39,12 @@ describe('timeoutRepeat', () => {
       expect(err.message).to.eq('omg');
     });
   });
+
+  it('hits outer timeout', () => {
+    return Q.timeoutRepeat(100, () => {
+      return Q().delay(200);
+    }).timeout(500, 'outer').catch((err) => {
+      expect(err.message).to.eq('outer');
+    });
+  });
 });
