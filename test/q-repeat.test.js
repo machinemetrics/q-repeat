@@ -16,7 +16,7 @@ describe('map', () => {
   });
 });
 
-describe('retry', () => {
+describe('timeoutRetry', () => {
   it('repeats until success', () => {
     let delay = 500;
     let invocations = 0;
@@ -41,10 +41,27 @@ describe('retry', () => {
   });
 
   it('hits outer timeout', () => {
-    return Q.timeoutRetry(100, () => {
+    return Q.timeoutRetry(150, () => {
       return Q().delay(200);
     }).timeout(500, 'outer').catch((err) => {
       expect(err.message).to.eq('outer');
+    });
+  });
+
+  it('cancels further executions when requested', () => {
+    let invocations = 0;
+    const control = {};
+
+    return Q.timeoutRetry(100, () => {
+      invocations += 1;
+      return Q().delay(200);
+    }, { maxRetries: 100, cancel: control }).timeout(475).catch(() => {
+      expect(invocations).to.eq(5);
+      control.cancel();
+      
+      return Q().delay(500).then(() => {
+        expect(invocations).to.eq(5);
+      });
     });
   });
 
@@ -53,7 +70,7 @@ describe('retry', () => {
     return Q.timeoutRetry(100, () => {
       invocations += 1;
       return Q().delay(200);
-    }, { maxAttempts: 3 }).catch(() => {
+    }, { maxRetries: 3 }).catch(() => {
       expect(invocations).to.eq(3);
     });
   });
