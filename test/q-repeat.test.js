@@ -58,7 +58,7 @@ describe('timeoutRetry', () => {
     }, { maxRetries: 100, cancel: control }).timeout(475).catch(() => {
       expect(invocations).to.eq(5);
       control.cancel();
-      
+
       return Q().delay(500).then(() => {
         expect(invocations).to.eq(5);
       });
