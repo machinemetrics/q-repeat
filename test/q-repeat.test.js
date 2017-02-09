@@ -16,12 +16,12 @@ describe('map', () => {
   });
 });
 
-describe('timeoutRepeat', () => {
+describe('retry', () => {
   it('repeats until success', () => {
     let delay = 500;
     let invocations = 0;
 
-    return Q.timeoutRepeat(150, () => {
+    return Q.timeoutRetry(150, () => {
       delay -= 100;
       invocations += 1;
       return Q(`answer ${invocations}`).delay(delay);
@@ -33,7 +33,7 @@ describe('timeoutRepeat', () => {
   });
 
   it('fails fast if actual error occurs', () => {
-    return Q.timeoutRepeat(500, () => {
+    return Q.timeoutRetry(500, () => {
       throw new Error('omg');
     }).catch((err) => {
       expect(err.message).to.eq('omg');
@@ -41,10 +41,30 @@ describe('timeoutRepeat', () => {
   });
 
   it('hits outer timeout', () => {
-    return Q.timeoutRepeat(100, () => {
+    return Q.timeoutRetry(100, () => {
       return Q().delay(200);
     }).timeout(500, 'outer').catch((err) => {
       expect(err.message).to.eq('outer');
+    });
+  });
+
+  it('does not exceed max attempts', () => {
+    let invocations = 0;
+    return Q.timeoutRetry(100, () => {
+      invocations += 1;
+      return Q().delay(200);
+    }, { maxAttempts: 3 }).catch(() => {
+      expect(invocations).to.eq(3);
+    });
+  });
+
+  it('does not exceed 5 (default) attempts', () => {
+    let invocations = 0;
+    return Q.timeoutRetry(100, () => {
+      invocations += 1;
+      return Q().delay(200);
+    }).catch(() => {
+      expect(invocations).to.eq(5);
     });
   });
 });
