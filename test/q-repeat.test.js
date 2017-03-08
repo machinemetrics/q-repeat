@@ -16,6 +16,35 @@ describe('map', () => {
   });
 });
 
+describe('mapSeries', () => {
+  it('maps in strict sequential order', () => {
+    let accum = 0;
+    return Q.mapSeries([1, 2, 3, 4, 5, 6, 7, 8, 9], (item) => {
+      accum += item;
+      expect(accum).to.eql(item * (item + 1) / 2);
+
+      return item * item;
+    }).then((results) => {
+      expect(results).to.eql([1, 4, 9, 16, 25, 36, 49, 64, 81]);
+    });
+  });
+
+  it('maps empty array', () => {
+    return Q.mapSeries([], (item) => item * item).then((results) => {
+      expect(results).to.eql([]);
+    });
+  });
+
+  it('survives throw in map body', () => {
+    let fail = false;
+    return Q.mapSeries([1, 2, 3, null], (item) => item.toString()).catch(() => {
+      fail = true;
+    }).finally(() => {
+      expect(fail).to.eql(true);
+    });
+  });
+});
+
 describe('timeoutRetry', () => {
   it('repeats until success', () => {
     let delay = 500;
