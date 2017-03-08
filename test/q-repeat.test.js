@@ -35,7 +35,7 @@ describe('mapSeries', () => {
     });
   });
 
-  it('survives throw in map body', () => {
+  it('catches throw in map body', () => {
     let fail = false;
     return Q.mapSeries([1, 2, 3, null], (item) => item.toString()).catch(() => {
       fail = true;
