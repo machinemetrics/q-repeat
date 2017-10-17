@@ -1,52 +1,19 @@
 {
-  "globals": {
-    "module": false,
-    "require": false,
-    "process": false,
-    "exports": false,
-    "console": false
-  },
   "rules": {
-    "no-console": [ "error" ],
-    "no-unused-vars": [ "error" ],
-    "no-trailing-spaces": [ "error" ],
-    "no-multi-spaces": [ "error" ],
-    "no-spaced-func": [ "error" ],
-    "no-whitespace-before-property": [ "error" ],
-    "space-before-blocks": [ "error" ],
-    "no-return-assign": [ "error" ],
-    "comma-dangle": [ "error", "always-multiline" ],
-    "no-inner-declarations": [ "off" ],
-    "indent": [
-      "error",
-      2,
-      {
-        "SwitchCase": 1,
-        "VariableDeclarator": {
-          "var": 2,
-          "let": 2,
-          "const": 3
-        }
-      }
-    ],
-    "quotes": [
-      "error",
-      "single",
-      { "allowTemplateLiterals": true }
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
+    "no-console": [ "off" ],
+    "newline-per-chained-call": [ "off" ],
+    "no-use-before-define": [ "off" ],
+    "arrow-body-style": [ "off" ],
+
+    "func-names": [ "off" ],
+    "new-cap": [ "off" ],
+    "class-methods-use-this": [ "off" ],
+    "no-param-reassign": [ "off" ]
   },
-  "env": {
-      "browser": false,
-      "node": true,
-      "es6": true
-  },
-  "extends": "eslint:recommended"
+  "extends": "mm",
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
+  ]
 }
