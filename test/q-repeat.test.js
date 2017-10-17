@@ -115,3 +115,41 @@ describe('timeoutRetry', () => {
     });
   });
 });
+
+describe('series', () => {
+  it('handles non-promisy array', () => {
+    const arr = [1, 2, 3, 4];
+    return Q.series(arr).then((result) => {
+      expect(result).to.eq(4);
+    });
+  });
+
+  it('handles a mixed array', () => {
+    const arr = [1, Q(2).delay(100), Q(3).delay(200), 5];
+    return Q.series(arr).then((result) => {
+      expect(result).to.eq(5);
+    });
+  });
+
+  it('handles an array of promises', () => {
+    const arr = [Q(1).delay(100), Q(2).delay(10), Q(3).delay(90)];
+    return Q.series(arr).then((result) => {
+      expect(result).to.eq(3);
+    });
+  });
+
+  it('handles a custom body', () => {
+    const arr = [Q(1).delay(100), Q(2).delay(10), Q(3).delay(90)];
+    const body = (item, result) => {
+      return item.then((val) => {
+        if (!result) {
+          result = 0;
+        }
+        return val + result;
+      });
+    };
+    return Q.series(arr, body).then((result) => {
+      expect(result).to.eq(6);
+    });
+  });
+});
