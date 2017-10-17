@@ -1,7 +1,8 @@
 'use strict';
+
 /* eslint-env mocha */
 
-const expect = require('chai').expect;
+const expect = require('chai').expect; // eslint-disable-line import/no-extraneous-dependencies
 const Q = require('q');
 
 require('../lib/index');
@@ -10,7 +11,7 @@ describe('map', () => {
   it('maps', () => {
     return Q().then(() => {
       return Q.map([1, 2, 3], x => x * x * x);
-    }).then(results => {
+    }).then((results) => {
       expect(results).to.eql([1, 8, 27]);
     });
   });
@@ -21,7 +22,7 @@ describe('mapSeries', () => {
     let accum = 0;
     return Q.mapSeries([1, 2, 3, 4, 5, 6, 7, 8, 9], (item) => {
       accum += item;
-      expect(accum).to.eql(item * (item + 1) / 2);
+      expect(accum).to.eql((item * (item + 1)) / 2);
 
       return item * item;
     }).then((results) => {
@@ -30,14 +31,14 @@ describe('mapSeries', () => {
   });
 
   it('maps empty array', () => {
-    return Q.mapSeries([], (item) => item * item).then((results) => {
+    return Q.mapSeries([], item => item * item).then((results) => {
       expect(results).to.eql([]);
     });
   });
 
   it('catches throw in map body', () => {
     let fail = false;
-    return Q.mapSeries([1, 2, 3, null], (item) => item.toString()).catch(() => {
+    return Q.mapSeries([1, 2, 3, null], item => item.toString()).catch(() => {
       fail = true;
     }).finally(() => {
       expect(fail).to.eql(true);

@@ -18,6 +18,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "q": "~1.2.0"
+    "q": "~1.2.0",
+    "eslint": "^3.9.1",
+    "eslint-config-mm": "https://github.com/machinemetrics/eslint-config-mm",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1"
   }
 }
