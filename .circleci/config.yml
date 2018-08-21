@@ -11,7 +11,7 @@ jobs:
       - restore_cache:
           key: q-repeat-full-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
-          command: npm install
+          command: yarn install
       - save_cache:
           key: q-repeat-full-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
