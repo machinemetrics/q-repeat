@@ -1,23 +1,5 @@
 version: 2
 executorType: docker
-default: &allbuildsteps
-  - checkout
-  - run:
-      command: cat package{,-lock}.json > cache-dependencies.txt
-  - run:
-      command: (npm --version && yarn --version && node --version) &>> cache-dependencies.txt
-  - restore_cache:
-      key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
-  - run:
-      command: yarn install
-  - save_cache:
-      key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
-      paths:
-        - ~/q-repeat/node_modules
-  - run:
-      command: npm test
-  - store_artifacts:
-      path: ~/q-repeat/coverage
 jobs:
   node-12:
     docker:
@@ -25,21 +7,69 @@ jobs:
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      *allbuildsteps
+      - checkout
+      - run:
+          command: cat package{,-lock}.json > cache-dependencies.txt
+      - run:
+          command: (npm --version && yarn --version && node --version) &>> cache-dependencies.txt
+      - restore_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+      - run:
+          command: yarn install
+      - save_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+          paths:
+            - ~/q-repeat/node_modules
+      - run:
+          command: npm test
+      - store_artifacts:
+          path: ~/q-repeat/coverage
   node-8:
     docker:
       - image: 352302322568.dkr.ecr.us-west-2.amazonaws.com/mm-ecs/ci-node:8.9.4.0
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      *allbuildsteps
+      - checkout
+      - run:
+          command: cat package{,-lock}.json > cache-dependencies.txt
+      - run:
+          command: (npm --version && yarn --version && node --version) &>> cache-dependencies.txt
+      - restore_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+      - run:
+          command: yarn install
+      - save_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+          paths:
+            - ~/q-repeat/node_modules
+      - run:
+          command: npm test
+      - store_artifacts:
+          path: ~/q-repeat/coverage
   node-6:
     docker:
       - image: 352302322568.dkr.ecr.us-east-1.amazonaws.com/mm-ecs/ci-node:6.10.1.8
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      *allbuildsteps
+      - checkout
+      - run:
+          command: cat package{,-lock}.json > cache-dependencies.txt
+      - run:
+          command: (npm --version && yarn --version && node --version) &>> cache-dependencies.txt
+      - restore_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+      - run:
+          command: yarn install
+      - save_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+          paths:
+            - ~/q-repeat/node_modules
+      - run:
+          command: npm test
+      - store_artifacts:
+          path: ~/q-repeat/coverage
 workflows:
   version: 2
   build-all:
