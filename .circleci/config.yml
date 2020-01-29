@@ -3,7 +3,7 @@ executorType: docker
 default: &allbuildsteps
   - checkout
   - run:
-      command: cat package{,-lock}.json > cache-dependencies.txt
+      command: cat package.json > cache-dependencies.txt
   - run:
       command: (npm --version && yarn --version && node --version) &>> cache-dependencies.txt
   - restore_cache:
