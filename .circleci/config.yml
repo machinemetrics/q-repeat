@@ -3,23 +3,23 @@ executorType: docker
 
 aliases:
   - &all-build-steps
-    - checkout
-    - run:
-        command: cat package{,-lock}.json > cache-dependencies.txt
-    - run:
-        command: (npm --version && yarn --version && node --version) &>> cache-dependencies.txt
-    - restore_cache:
-        key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
-    - run:
-        command: yarn install
-    - save_cache:
-        key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
-        paths:
-          - ~/q-repeat/node_modules
-    - run:
-        command: npm test
-    - store_artifacts:
-        path: ~/q-repeat/coverage
+      - checkout
+      - run:
+          command: cat package{,-lock}.json > cache-dependencies.txt
+      - run:
+          command: (npm --version && yarn --version && node --version) &>> cache-dependencies.txt
+      - restore_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+      - run:
+          command: yarn install
+      - save_cache:
+          key: q-repeat-full-{{ .Branch }}-{{ checksum "cache-dependencies.txt" }}
+          paths:
+            - ~/q-repeat/node_modules
+      - run:
+          command: npm test
+      - store_artifacts:
+          path: ~/q-repeat/coverage
 
 jobs:
   node-12:
