@@ -1,6 +1,7 @@
 version: 2
 executorType: docker
 default: &allbuildsteps
+  - checkout
   - run:
       command: cat package{,-lock}.json > cache-dependencies.txt
   - run:
@@ -24,7 +25,6 @@ jobs:
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      - checkout
       *allbuildsteps
   node-8:
     docker:
@@ -32,7 +32,6 @@ jobs:
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      - checkout
       *allbuildsteps
   node-6:
     docker:
@@ -40,7 +39,6 @@ jobs:
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      - checkout
       *allbuildsteps
 workflows:
   version: 2
