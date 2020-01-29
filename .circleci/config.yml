@@ -1,6 +1,6 @@
 version: 2
 executorType: docker
-allbuildsteps: &allbuildsteps
+default: &allbuildsteps
   - checkout
   - run:
       command: cat package{,-lock}.json > cache-dependencies.txt
@@ -25,21 +25,21 @@ jobs:
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      <<: *allbuildsteps
+      *allbuildsteps
   node-8:
     docker:
       - image: 352302322568.dkr.ecr.us-west-2.amazonaws.com/mm-ecs/ci-node:8.9.4.0
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      <<: *allbuildsteps
+      *allbuildsteps
   node-6:
     docker:
       - image: 352302322568.dkr.ecr.us-east-1.amazonaws.com/mm-ecs/ci-node:6.10.1.8
       - image: redis:3.2.6
     working_directory: ~/q-repeat
     steps:
-      <<: *allbuildsteps
+      *allbuildsteps
 workflows:
   version: 2
   build-all:
